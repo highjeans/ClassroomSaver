@@ -3,13 +3,14 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('sendannouncement')
-        .setDescription('Pings everyone with your custom message.')
+        .setDescription('Pings all students with your custom message.')
         .addStringOption(option =>
             option.setName('announcement')
                 .setDescription('The announcement to send everyone.')
                 .setRequired(true)),
     async execute(interaction) {
-        await interaction.channel.send("@everyone " + interaction.options.getString("announcement"));
+        const studentRole = await interaction.guild.roles.cache.find(role => role.name === "Student");
+        await interaction.channel.send(`<@&${studentRole.id}> ` + interaction.options.getString("announcement"));
         await interaction.reply({content: "Announcement Sent!", ephemeral: true});
     },
 };
