@@ -10,6 +10,6 @@ module.exports = {
                 .setRequired(true)),
     async execute(interaction) {
         await interaction.channel.send("@everyone " + interaction.options.getString("announcement"));
-        await interaction.reply({content: "Done!", ephemeral: true});
+        await interaction.reply({content: "Announcement Sent!", ephemeral: true});
     },
 };
