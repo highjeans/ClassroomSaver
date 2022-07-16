@@ -25,7 +25,9 @@ module.exports = {
                 member.roles.add(professorRole);
             }
             else {
-                member.roles.add(studentRole);
+                if (!member.roles.cache.some(role => role.name === interaction.client.user.username)) {
+                    member.roles.add(studentRole);
+                }
             }
         });
 
