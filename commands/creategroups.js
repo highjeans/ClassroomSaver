@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-let _ = require("underscore")
 
 module.exports = {
     data: new SlashCommandBuilder()
