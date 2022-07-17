@@ -7,6 +7,10 @@ module.exports = {
         .addStringOption(option =>
             option.setName('question')
                 .setDescription('The question to ask the students')
+                .setRequired(true))
+        .addStringOption(option =>
+            option.setName('answer')
+                .setDescription('The answer to the question')
                 .setRequired(true)),
     async execute(interaction) {
         if (!interaction.member.roles.cache.some(role => role.name === 'Professor')) {
@@ -15,7 +19,10 @@ module.exports = {
         }
 
         const studentRole = await interaction.guild.roles.cache.find(role => role.name === "Student");
-        await interaction.channel.send(`<@&${studentRole.id}> ` + interaction.options.getString("question"));
+        const thread = await interaction.channel.threads.create({
+            name: "Question Poll"
+        });
+        await thread.send(`<@&${studentRole.id}> ` + interaction.options.getString("question"));
         await interaction.reply({content: "Question Poll Created!", ephemeral: true});
     },
 };
