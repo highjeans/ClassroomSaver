@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-let _ = require("underscore")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,38 +14,13 @@ module.exports = {
 
         const students = interaction.guild.roles.cache.find(role => role.name === "Student").members;
 
-        const size = interaction.options.getInteger("size");
+        const absentStudents = students.filter(member => member.presence === null || member.presence.status === "offline");
 
-        let groups = [];
-        let group = [];
-
-        let i = 0;
-        students.forEach((student) => {
-            if (i === size) {
-                i = 0;
-                groups.push(group);
-                group = [];
-            }
-            group.push(student);
-            i += 1;
-        });
-        groups.push(group);
-
-        let message = "Here are the randomized student groups: \n\n";
-        console.log(groups)
-
-        let groupNum = 1;
-        for (const groupIndex in groups) {
-            message += "Group " + groupNum + ": ";
-            for (let i = 0; i < groups[groupIndex].length; i++){
-                message += `${groups[groupIndex][i]} `;
-            }
-            message += "\n";
-            groupNum += 1;
+        for (const student of absentStudents) {
+            console.log(student);
+            student[1].createDM().then(dm => dm.send(`Class in ${interaction.guild.name} has started. Please show up ASAP.`));
         }
 
-        await interaction.channel.send(message);
-
-        await interaction.reply({content: "Student Groups Created!", ephemeral: true});
+        await interaction.reply({content: "Absent students have been notified of class!", ephemeral: true});
     },
 };
