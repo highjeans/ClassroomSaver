@@ -15,9 +15,8 @@ module.exports = {
         const professorRole = guild.roles.cache.filter(role => role.name === "Professor");
         const studentRole = guild.roles.cache.filter(role => role.name === "Student");
 
-        professor.roles.add(professorRole);
         professor.roles.remove(studentRole);
-
         await interaction.reply({content: "Professor role given!", ephemeral: true});
+        professor.roles.add(professorRole);
     },
 };
