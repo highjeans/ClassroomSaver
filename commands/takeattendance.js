@@ -3,15 +3,11 @@ let _ = require("underscore")
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('creategroups')
-        .setDescription('Creates randomized student groups')
-        .addIntegerOption(option =>
-            option.setName('size')
-                .setDescription('Size of the groups')
-                .setRequired(true)),
+        .setName('takeattendance')
+        .setDescription('Takes Attendance for professors by counting which students are online'),
     async execute(interaction) {
         if (!interaction.member.roles.cache.some(role => role.name === 'Professor')) {
-            await interaction.reply({content: "Only Professors can create students groups.", ephemeral: true});
+            await interaction.reply({content: "Only Professors can take attendance.", ephemeral: true});
             return;
         }
 
