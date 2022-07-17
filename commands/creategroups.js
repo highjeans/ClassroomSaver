@@ -37,7 +37,6 @@ module.exports = {
         groups.push(group);
 
         let message = "Here are the randomized student groups: \n\n";
-        console.log(groups)
 
         let groupNum = 1;
         for (const groupIndex in groups) {
