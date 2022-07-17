@@ -12,24 +12,11 @@ module.exports = {
     async execute(interaction) {
         const guild = interaction.guild;
         const professor = interaction.options.getMember("username");
-        const professorRole = await guild.roles.create({
-            name: "Professor",
-            reason: "professor role"
-        });
-        const studentRole = await guild.roles.create({
-            name: "Student",
-            reason: "student role"
-        });
+        const professorRole = guild.roles.cache.filter(role => role.name === "Professor");
+        const studentRole = guild.roles.cache.filter(role => role.name === "Student");
 
-        guild.members.cache.forEach((member) => {
-            if (!member.roles.cache.some(role => role.name === interaction.client.user.username)) {
-                member.roles.add(studentRole);
-            }
-        });
-
-        professor.roles
-            .add(professorRole)
-            .remove(studentRole);
+        professor.roles.add(professorRole);
+        professor.roles.remove(studentRole);
 
         await interaction.reply({content: "Professor role given!", ephemeral: true});
     },
