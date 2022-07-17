@@ -10,7 +10,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(interaction) {
         if (!interaction.member.roles.cache.some(role => role.name === 'Professor')) {
-            await interaction.reply({content: "Only Professors can create students groups.", ephemeral: true});
+            await interaction.reply({content: "Only Professors can create student groups.", ephemeral: true});
             return;
         }
 
