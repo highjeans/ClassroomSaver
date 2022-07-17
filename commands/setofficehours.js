@@ -19,7 +19,8 @@ module.exports = {
         }
 
         const studentRole = await interaction.guild.roles.cache.find(role => role.name === "Student");
-        await interaction.channel.send(`<@&${studentRole.id}> ` + "The professor has set Office Hours to be on " + interaction.options.getString("date") + " at " + interaction.options.getString("time"));
+        const message = await interaction.channel.send(`<@&${studentRole.id}> ` + "The professor has set Office Hours to be on " + interaction.options.getString("date") + " at " + interaction.options.getString("time"));
+        await message.pin();
         await interaction.reply({content: "Office Hours has been set and has been announced to the students!", ephemeral: true});
     },
 };
