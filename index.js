@@ -37,6 +37,30 @@ client.on("interactionCreate", async (interaction) => {
     } catch (error) {
         console.error(error);
     }
-})
+});
+
+client.on("guildCreate", async (guild) => {
+    await guild.roles.create({
+        name: "Professor",
+        reason: "professor role"
+    });
+    const studentRole = await guild.roles.create({
+        name: "Student",
+        reason: "student role"
+    });
+
+    await guild.members.fetch();
+
+    guild.members.cache.forEach((member) => {
+        if (!member.roles.cache.some(role => role.name === client.user.username)) {
+            member.roles.add(studentRole);
+        }
+    });
+});
+
+client.on("guildMemberAdd", async (member) => {
+    const studentRole = member.guild.roles.cache.filter(role => role.name === "Student");
+    await member.roles.add(studentRole);
+});
 
 client.login(token);
